@@ -30,10 +30,10 @@ end
 loop do
   player_win_counter = 0
   computer_win_counter = 0
-  while player_win_counter < 5 && computer_win_counter < 5 do
+  while player_win_counter < 5 && computer_win_counter < 5
     choice = ''
     loop do
-      prompt "Choose one (rock, paper, scissors, lizard or spock): 
+      prompt "Choose one (rock, paper, scissors, lizard or spock):
       #{VALID_CHOICES.join(', ')}"
       choice = gets.chomp
       if VALID_CHOICES.include?(choice)
@@ -54,7 +54,6 @@ loop do
     prompt("Your current score: #{player_win_counter}
             Computer's current score: #{computer_win_counter}")
 
-    
   end
   if player_win_counter == 5
     prompt("Congratulations on your big success!")
