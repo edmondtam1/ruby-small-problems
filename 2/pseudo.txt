@@ -1,0 +1,41 @@
+# returns the sum of two integers
+
+START
+
+GET num1
+GET num2
+
+result = num1 + num2
+
+PRINT result
+END
+
+# array of strings and concatenates
+
+START
+
+GET string_array
+SET result = ''
+SET counter = 0
+
+WHILE counter < size of string_array
+  add string from string_array to result
+  counter += 1
+
+END
+
+# array of integers and return new array with other elements
+# assuming this means take out the integer and return the other integers
+# otherwise it could mean take out the integer and return the integer as a string, float, array, map...?
+
+START
+
+GET int_array
+SET counter = 0
+
+WHILE counter < size of int_array
+  return an array that contains int_array minus int_array[counter]
+  counter += 1
+  
+END
+
