@@ -98,9 +98,11 @@ class Human < Player
   def choose
     choice = nil
     loop do
-      puts "Please choose rock, paper, scissors, lizard or spock (r, p, sc, l or sp)."
+      puts "Please choose rock, paper, scissors, lizard or spock"
+      print "(r, p, sc, l or sp)."
       choice = gets.chomp.downcase
-      break if Move::VALUES.include?(choice) || Move::ABBREVIATED_VALUES.include?(choice)
+      break if Move::VALUES.include?(choice) ||
+               Move::ABBREVIATED_VALUES.include?(choice)
       puts "Sorry, invalid choice."
     end
     choice_index = Move::ABBREVIATED_VALUES.index(choice)
