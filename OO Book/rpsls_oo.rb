@@ -1,5 +1,6 @@
 class Move
   VALUES = ['rock', 'paper', 'scissors', 'lizard', 'spock']
+  ABBREVIATED_VALUES = ['r', 'p', 'sc', 'l', 'sp']
 
   attr_accessor :greater, :lesser
   def initialize(value)
@@ -78,12 +79,17 @@ class Player
 end
 
 class Human < Player
+  def valid_name?(str)
+    return false if str.empty?
+    true
+  end
+
   def set_name
     n = ""
     loop do
       puts "What's your name?"
       n = gets.chomp
-      break unless n.empty?
+      break if valid_name?(n)
       puts "Sorry, must be a valid entry."
     end
     self.name = n
@@ -92,11 +98,13 @@ class Human < Player
   def choose
     choice = nil
     loop do
-      puts "Please choose rock, paper, scissors, lizard or spock."
-      choice = gets.chomp
-      break if Move::VALUES.include? choice
+      puts "Please choose rock, paper, scissors, lizard or spock (r, p, sc, l or sp)."
+      choice = gets.chomp.downcase
+      break if Move::VALUES.include?(choice) || Move::ABBREVIATED_VALUES.include?(choice)
       puts "Sorry, invalid choice."
     end
+    choice_index = Move::ABBREVIATED_VALUES.index(choice)
+    choice = Move::VALUES[choice_index] if choice_index
     history << choice
     make_move(choice)
   end
@@ -115,27 +123,27 @@ class Computer < Player
       hash['scissors'] = 0
       hash['spock'] = 30
     when 'Chappie'
-      hash ['lizard'] = 20
-      hash ['paper'] = 2
+      hash['lizard'] = 20
+      hash['paper'] = 2
     when 'Sonny'
-      hash ['spock'] = 30
+      hash['spock'] = 30
     when 'Number 5'
-      hash ['scissors'] = 25
+      hash['scissors'] = 25
     end
   end
 
   def make_choice
-    hsh = Hash[Move::VALUES.product([10])]
-    apply_personality(hsh)
-    arr = []
+    personalities = Hash[Move::VALUES.product([10])]
+    apply_personality(personalities)
+    personality_array = []
     win_loss[:wins].each do |k, v|
-      hsh[k] += v
+      personalities[k] += v
     end
     win_loss[:losses].each do |k, v|
-      hsh[k] -= v unless v == 0
+      personalities[k] -= v unless v == 0
     end
-    hsh.each { |k, v| v.times { arr << k } }
-    arr.sample
+    personalities.each { |k, v| v.times { personality_array << k } }
+    personality_array.sample
   end
 
   def choose
