@@ -1,3 +1,4 @@
+require 'io/console'
 require 'pry'
 
 # TTT game using OO principles
@@ -55,7 +56,6 @@ class Board
           @squares[num].marker
         end
       end
-      # binding.pry
       if mapped_line.count(player_marker) == 2
         arr = mapped_line.select { |k| integer?(k) }
         return arr[0] if integer?(arr[0])
@@ -113,12 +113,55 @@ class Player
   end
 end
 
+module Displayable
+  def display_welcome_message
+    puts "Welcome to Tic Tac Toe, #{human.name}!"
+    puts "You are competing against #{computer.name}."
+    puts "First to #{TTTGame::SCORE_TO_WIN} wins!"
+    puts ''
+  end
+
+  def display_goodbye_message
+    puts "Thanks for playing Tic Tac Toe, #{human.name}! Goodbye!"
+  end
+
+  def display_board
+    puts "Current score is #{@score[:human_score]}-#{@score[:computer_score]}"
+    puts "You're #{human.marker}. #{computer.name} is #{computer.marker}."
+    puts ''
+    board.draw
+    puts ''
+  end
+
+  def display_overall_winner
+    human_score = @score[:human_score]
+    computer_score = @score[:computer_score]
+    if human_score >= TTTGame::SCORE_TO_WIN
+      puts "You've won #{human_score} to #{computer_score} overall!"
+    else
+      puts "You've lost #{human_score} to #{computer_score} overall."
+    end
+  end
+
+  def clear_screen_and_display_board
+    clear
+    display_board
+  end
+
+  def display_play_again_message
+    puts "Let's play again, #{human.name}!"
+    puts ''
+  end
+end
+
 # Defines Game class
 class TTTGame
+  include Displayable
+
   MARKER_OPTIONS = ['X', 'O']
   FIRST_MOVER = 'X'
   CENTER_TILE = 5
-  SCORE_TO_WIN = 3
+  SCORE_TO_WIN = 2
 
   attr_reader :board, :human, :computer, :current_mover
 
@@ -131,7 +174,7 @@ class TTTGame
   end
 
   def play
-    pre_game_methods
+    pre_game
     loop do
       loop do
         game_loop
@@ -150,7 +193,8 @@ class TTTGame
 
   def pre_game
     clear
-    choose_name
+    choose_human_name
+    choose_computer_name
     display_welcome_message
     choose_marker
     display_board
@@ -168,20 +212,19 @@ class TTTGame
     @computer.marker = MARKER_OPTIONS.reject { |v| v == human_marker }.first
   end
 
-  def choose_name
-    choose_human_name
-    choose_computer_name
-  end
-
   def choose_human_name
     puts "What is your name?"
     human_name = nil
     loop do
       human_name = gets.chomp
-      break if human_name.chars.none? { |k| k == ' ' }
+      break if valid_name(human_name)
       puts 'Invalid entry! Please key in non-space characters.'
     end
     @human.name = human_name
+  end
+
+  def valid_name(str)
+    str.chars.none? { |k| k == ' ' } && !str.empty?
   end
 
   def choose_computer_name
@@ -200,39 +243,6 @@ class TTTGame
   def overall_winner?
     @score[:human_score] >= SCORE_TO_WIN ||
       @score[:computer_score] >= SCORE_TO_WIN
-  end
-
-  def display_overall_winner
-    human_score = @score[:human_score]
-    computer_score = @score[:computer_score]
-    if human_score >= SCORE_TO_WIN
-      puts "You've won #{human_score} to #{computer_score}!"
-    else
-      puts "You've lost #{human_score} to #{computer_score}."
-    end
-  end
-
-  def display_welcome_message
-    puts "Welcome to Tic Tac Toe, #{human.name}!"
-    puts "You are competing against #{computer.name}."
-    puts ''
-  end
-
-  def display_goodbye_message
-    puts "Thanks for playing Tic Tac Toe, #{human.name}! Goodbye!"
-  end
-
-  def display_board
-    puts "Current score is #{@score[:human_score]}-#{@score[:computer_score]}"
-    puts "You're #{human.marker}. #{computer.name} is #{computer.marker}."
-    puts ''
-    board.draw
-    puts ''
-  end
-
-  def clear_screen_and_display_board
-    clear
-    display_board
   end
 
   def joinor(arr, separator = ', ', last_word = 'or')
@@ -293,14 +303,21 @@ class TTTGame
     case board.winning_marker
     when human.marker
       @score[:human_score] += 1
-      puts 'You won!'
+      puts 'You won this round!'
     when computer.marker
       @score[:computer_score] += 1
-      puts 'Computer won :('
+      puts 'Computer won the round :('
     else
       puts "It's a tie!"
     end
+    display_end_message
+  end
+
+  def display_end_message
     puts '-----------------------'
+    return if overall_winner?
+    puts 'Press any key to play the next round.'
+    STDIN.getch
   end
 
   def play_again?
@@ -311,16 +328,11 @@ class TTTGame
       break if %w[y n].include? answer
       puts 'Sorry, must be y or n.'
     end
-    answer == 'y' ? true : false
+    answer == 'y'
   end
 
   def clear
-    system 'clear'
-  end
-
-  def display_play_again_message
-    puts "Let's play again, #{human.name}!"
-    puts ''
+    system('clear') || system('cls')
   end
 
   def reset_game
