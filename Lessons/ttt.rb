@@ -152,6 +152,13 @@ module Displayable
     puts "Let's play again, #{human.name}!"
     puts ''
   end
+
+  def display_end_message
+    puts '-----------------------'
+    return if overall_winner?
+    puts 'Press any key to play the next round.'
+    STDIN.getch
+  end
 end
 
 # Defines Game class
@@ -311,13 +318,6 @@ class TTTGame
       puts "It's a tie!"
     end
     display_end_message
-  end
-
-  def display_end_message
-    puts '-----------------------'
-    return if overall_winner?
-    puts 'Press any key to play the next round.'
-    STDIN.getch
   end
 
   def play_again?
