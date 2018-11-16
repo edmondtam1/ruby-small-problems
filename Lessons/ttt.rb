@@ -120,7 +120,7 @@ end
 class TTTGame
   # HUMAN_MARKER = 'X'
   # COMPUTER_MARKER = 'O'
-  MARKER_OPTIONS = ['X','O']
+  MARKER_OPTIONS = ['X', 'O']
   FIRST_MOVER = 'X'
   CENTER_TILE = 5
   SCORE_TO_WIN = 3
@@ -136,11 +136,7 @@ class TTTGame
   end
 
   def play
-    clear
-    choose_name
-    display_welcome_message
-    choose_marker
-    display_board
+    pre_game_methods
     loop do
       loop do
         game_loop
@@ -156,6 +152,14 @@ class TTTGame
   end
 
   private
+
+  def pre_game
+    clear
+    choose_name
+    display_welcome_message
+    choose_marker
+    display_board
+  end
 
   def choose_marker
     puts 'Please choose a marker you want: (X or O)'
