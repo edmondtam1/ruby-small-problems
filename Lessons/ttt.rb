@@ -36,9 +36,6 @@ class Board
     WINNING_LINES.each do |line|
       markers = @squares.values_at(*line).collect(&:marker)
       if markers.uniq == [markers[0]] && markers[0] != Square::INITIAL_MARKER
-        # potential other conditionals:
-        # markers.uniq.size == 1
-        # markers.min == markers.max
         return markers[0]
       end
     end
@@ -118,8 +115,6 @@ end
 
 # Defines Game class
 class TTTGame
-  # HUMAN_MARKER = 'X'
-  # COMPUTER_MARKER = 'O'
   MARKER_OPTIONS = ['X', 'O']
   FIRST_MOVER = 'X'
   CENTER_TILE = 5
