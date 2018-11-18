@@ -1,5 +1,4 @@
 require 'io/console'
-require 'pry'
 
 # TTT game using OO principles
 class Board
@@ -153,6 +152,17 @@ module Displayable
     puts ''
   end
 
+  def display_result(winning_marker)
+    case winning_marker
+    when human.marker
+      puts 'You won this round!'
+    when computer.marker
+      puts 'Computer won the round :('
+    else
+      puts "It's a tie!"
+    end
+  end
+
   def display_end_message
     puts '-----------------------'
     return if overall_winner?
@@ -207,6 +217,15 @@ class TTTGame
     display_board
   end
 
+  def game_loop
+    loop do
+      current_player_moves
+      break if board.someone_won? || board.full?
+      clear_screen_and_display_board
+    end
+    manage_round_result
+  end
+
   def choose_marker
     puts 'Please choose a marker you want: (X or O)'
     human_marker = nil
@@ -236,15 +255,6 @@ class TTTGame
 
   def choose_computer_name
     @computer.name = ['R2D2', 'Hal', 'Sonny'].sample
-  end
-
-  def game_loop
-    loop do
-      current_player_moves
-      break if board.someone_won? || board.full?
-      clear_screen_and_display_board
-    end
-    display_and_update_result
   end
 
   def overall_winner?
@@ -305,19 +315,21 @@ class TTTGame
     end
   end
 
-  def display_and_update_result
+  def manage_round_result
+    winning_marker = board.winning_marker
     display_board
-    case board.winning_marker
+    display_result(winning_marker)
+    update_score(winning_marker)
+    display_end_message
+  end
+
+  def update_score(winning_marker)
+    case winning_marker
     when human.marker
       @score[:human_score] += 1
-      puts 'You won this round!'
     when computer.marker
       @score[:computer_score] += 1
-      puts 'Computer won the round :('
-    else
-      puts "It's a tie!"
     end
-    display_end_message
   end
 
   def play_again?
