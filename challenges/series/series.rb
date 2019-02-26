@@ -16,7 +16,7 @@ class Series
   #     result << chunk
   #     index += 1
   #   end
-    
+
   #   result
   # end
 
