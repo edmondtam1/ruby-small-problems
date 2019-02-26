@@ -109,7 +109,7 @@ class TodoList
     # end
 
     # @todos
-    
+
     @todos.each do |todo|
       yield(todo)
     end
@@ -196,7 +196,7 @@ end
 # p list.to_a                      # returns an array of all items in the list
 
 # #done?
-# p list.done?                     # returns true if all todos in the list are done, otherwise false                         
+# p list.done?                     # returns true if all todos in the list are done, otherwise false
 
 # # ---- Retrieving an item in the list ----
 
