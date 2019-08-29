@@ -21,6 +21,7 @@ class TodoListTest < MiniTest::Test
   end
 
   # Your tests go here. Remember they must start with "test_"
+
   def test_to_a
     assert_equal(@todos, @list.to_a)
   end
@@ -126,7 +127,7 @@ class TodoListTest < MiniTest::Test
     [ ] Clean room
     [ ] Go to gym
     OUTPUT
-
+  
     assert_equal(output, @list.to_s)
   end
 
@@ -142,7 +143,7 @@ class TodoListTest < MiniTest::Test
 
     assert_equal(output, @list.to_s)
   end
-
+  
   def test_to_s_3
     output = <<~OUTPUT.chomp
     ---- Today's Todos ----
