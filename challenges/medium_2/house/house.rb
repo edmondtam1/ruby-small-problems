@@ -1,5 +1,4 @@
 class House
-
   def self.recite
     new.recite
   end

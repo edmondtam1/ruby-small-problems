@@ -1,6 +1,6 @@
 class Diamond
   ALPHABET = [*'A'..'Z']
-  
+
   def self.make_diamond(letter)
     return "A\n" if letter == 'A'
     result = []

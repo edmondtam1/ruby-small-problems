@@ -7,7 +7,7 @@ class Element
   end
 
   def tail?
-    @next == nil
+    @next.nil?
   end
 end
 
@@ -19,7 +19,7 @@ class SimpleLinkedList
   end
 
   def empty?
-    @head == nil
+    @head.nil?
   end
 
   def peek
@@ -33,7 +33,7 @@ class SimpleLinkedList
   end
 
   def size
-    self.to_a.size
+    to_a.size
   end
 
   def to_a
@@ -44,11 +44,10 @@ class SimpleLinkedList
       node = node.next
     end
     result
-
   end
 
   def reverse
-    SimpleLinkedList.from_a(self.to_a.reverse)
+    SimpleLinkedList.from_a(to_a.reverse)
   end
 
   def self.from_a(arr)

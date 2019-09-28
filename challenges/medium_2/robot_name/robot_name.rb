@@ -19,7 +19,7 @@ class Robot
   def generate_name
     result = ""
     loop do
-      result = [*'AA'..'ZZ'].sample + sprintf("%03d", rand(0..999))
+      result = [*'AA'..'ZZ'].sample + format("%03d", rand(0..999))
       break if !@@names.include?(result)
     end
     @@names[result] = true

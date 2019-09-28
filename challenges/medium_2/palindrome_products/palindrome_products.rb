@@ -7,7 +7,7 @@ class Palindromes
   def generate
     @factors[0].upto(@factors[1]) do |i|
       i.upto(@factors[1]) do |j|
-        @palindromes[i * j] += [[i, j]] if is_palindrome?(i * j)
+        @palindromes[i * j] += [[i, j]] if palindrome?(i * j)
       end
     end
   end
@@ -22,15 +22,16 @@ class Palindromes
     Palindrome.new(value, @palindromes[value])
   end
 
-  def is_palindrome?(num)
+  def palindrome?(num)
     num.to_s.reverse == num.to_s
   end
 end
 
 class Palindrome
   attr_reader :value, :factors
-  
+
   def initialize(value, factors)
-    @value, @factors = value, factors
+    @value = value
+    @factors = factors
   end
 end

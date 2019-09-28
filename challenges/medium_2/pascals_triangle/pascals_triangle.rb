@@ -8,7 +8,8 @@ class Triangle
     last_row = []
     2.upto(@rows) do |r|
       temp = Array.new(r)
-      temp[0], temp[-1] = 1, 1
+      temp[0] = 1
+      temp[-1] = 1
       1.upto(temp.size - 2) do |i|
         temp[i] = last_row[i - 1] + last_row[i]
       end
@@ -18,5 +19,4 @@ class Triangle
 
     result
   end
-
 end

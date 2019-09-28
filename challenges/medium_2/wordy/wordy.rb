@@ -1,5 +1,6 @@
 class WordProblem
-  OPERATORS = {'plus' => '+', 'minus' => '-', 'multiplied' => '*', 'divided' => '/'}
+  OPERATORS = { 'plus' => '+', 'minus' => '-',
+                'multiplied' => '*', 'divided' => "/" }
 
   # def initialize(question)
   #   @question = question
@@ -16,7 +17,8 @@ class WordProblem
   #       num_next = words[counter].to_i
   #     elsif ['plus', 'minus'].include?(words[counter])
   #       op_next = words[counter]
-  #     elsif ['multiplied by', 'divided by'].include?("#{words[counter]} #{words[counter + 1]}")
+  #     elsif ['multiplied by', 'divided by']
+  #     .include?("#{words[counter]} #{words[counter + 1]}")
   #       op_next = words[counter]
   #       counter += 1
   #     else
@@ -31,11 +33,12 @@ class WordProblem
   #   result
   # end
 
-  def initialize question
+  def initialize(question)
     @numbers = question.scan(/-?\d+/).map(&:to_i)
     @operators = question.scan(/#{OPERATORS.keys.join('|')}/)
 
-    raise ArgumentError if @numbers.empty? || @operators.empty? || @numbers.size <= @operators.size
+    raise ArgumentError if @numbers.empty? || @operators.empty? \
+                           || @numbers.size <= @operators.size
   end
 
   def answer
@@ -44,5 +47,4 @@ class WordProblem
       total.send OPERATORS[op], nums.next
     end
   end
-
 end

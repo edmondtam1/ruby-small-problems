@@ -1,5 +1,5 @@
 class Crypto
-  def initialize text
+  def initialize(text)
     @text = text
   end
 
@@ -18,8 +18,9 @@ class Crypto
   def ciphertext
     # result = ''
 
-    # 0.upto(size) do |i| 
-    #   plaintext_segments.reduce("") { |result, w| result += w[i] unless w[i].nil?}
+    # 0.upto(size) do |i|
+    #   plaintext_segments.reduce("")
+    #     { |result, w| result += w[i] unless w[i].nil?}
     # end
     # result
     encode_plaintext
@@ -37,7 +38,6 @@ class Crypto
   def right_pad(string, size)
     string + ' ' * (size - string.size)
   end
-
 end
 
 crypto = Crypto.new('s#$%^&plunke')
