@@ -1,0 +1,11 @@
+en:
+  welcome: "Welcome to mortgage calculator!"
+  loan_amount: "Enter the loan amount (in your local currency):"
+  invalid_entry: "Invalid entry. Please enter a positive integer or a float!"
+  annual_rate: "Enter your Annual Percentage Rate (if it's 5%, key in 5):"
+  loan_annual: "How many years is your loan for?"
+  input_thanks: "Thanks for that! Here's a summary of your info:"
+  loan_amount_done: "Loan amount is: "
+  annual_rate_done: "Annual rate is: "
+  loan_duration_done: "Loan duration in years is: "
+
